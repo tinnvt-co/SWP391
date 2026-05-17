@@ -13,9 +13,16 @@
 </div>
 
 <c:if test="${param.success eq 'added'}">
-    <div class="alert alert-success alert-dismissible d-flex align-items-center gap-2" role="alert">
+    <div class="alert alert-success alert-dismissible d-flex align-items-center gap-2">
         <i class="bi bi-check-circle-fill"></i>
         <span>User added successfully!</span>
+        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+    </div>
+</c:if>
+<c:if test="${param.success eq 'updated'}">
+    <div class="alert alert-success alert-dismissible d-flex align-items-center gap-2">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>User updated successfully!</span>
         <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
     </div>
 </c:if>
@@ -29,10 +36,9 @@
                     <th>Full Name</th>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Phone</th>
                     <th>Role</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center" style="width:100px">Action</th>
+                    <th class="text-center" style="width:140px">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +58,6 @@
                                 </td>
                                 <td><code>${u.username}</code></td>
                                 <td>${u.email}</td>
-                                <td>${not empty u.phone ? u.phone : '–'}</td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${u.roleName eq 'ADMIN'}">
@@ -81,16 +86,31 @@
                                 </td>
                                 <td class="text-center">
                                     <a href="${pageContext.request.contextPath}/users?action=detail&id=${u.userId}"
-                                       class="btn btn-sm btn-outline-primary" title="View Detail">
+                                       class="btn btn-sm btn-outline-primary" title="View">
                                         <i class="bi bi-eye"></i>
                                     </a>
+                                    <a href="${pageContext.request.contextPath}/users?action=edit&id=${u.userId}"
+                                       class="btn btn-sm btn-outline-warning" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="post" action="${pageContext.request.contextPath}/users?action=toggle-status"
+                                          class="d-inline"
+                                          onsubmit="return confirm('${u.status eq 'ACTIVE' ? 'Deactivate' : 'Activate'} this user?')">
+                                        <input type="hidden" name="userId" value="${u.userId}">
+                                        <input type="hidden" name="currentStatus" value="${u.status}">
+                                        <button type="submit"
+                                                class="btn btn-sm ${u.status eq 'ACTIVE' ? 'btn-outline-danger' : 'btn-outline-success'}"
+                                                title="${u.status eq 'ACTIVE' ? 'Deactivate' : 'Activate'}">
+                                            <i class="bi ${u.status eq 'ACTIVE' ? 'bi-toggle-on' : 'bi-toggle-off'}"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No users found.</td>
+                            <td colspan="7" class="text-center text-muted py-4">No users found.</td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
