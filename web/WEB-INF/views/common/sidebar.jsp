@@ -29,6 +29,11 @@
                 <i class="bi bi-people"></i> Users
             </a>
         </li>
+        <li class="nav-item">
+            <a href="<%= cp %>/roles" class="nav-link <%= uri.contains("/roles") ? "active" : "" %>">
+                <i class="bi bi-shield-lock"></i> Roles
+            </a>
+        </li>
         <% } %>
 
         <% if (isAdmin || isManager) { %>
