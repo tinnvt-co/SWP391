@@ -59,6 +59,12 @@
             <span>${successMessage}</span>
         </div>
     </c:if>
+    <c:if test="${param.success eq 'password_reset'}">
+        <div class="alert alert-success py-2 d-flex align-items-center gap-2">
+            <i class="bi bi-check-circle"></i>
+            <span>Password reset successfully. Please login with your new password.</span>
+        </div>
+    </c:if>
 
     <form action="${pageContext.request.contextPath}/login" method="post" autocomplete="off">
         <div class="mb-3">

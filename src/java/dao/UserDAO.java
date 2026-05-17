@@ -132,56 +132,36 @@ public class UserDAO {
         }
     }
 
-    public boolean updateUser(User user) {
-        String sql = "UPDATE users SET full_name = ?, email = ?, phone = ?, address = ?, role_id = ?, status = ? "
-                   + "WHERE user_id = ?";
-
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, user.getFullName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPhone());
-            ps.setString(4, user.getAddress());
-            ps.setInt(5, user.getRoleId());
-            ps.setString(6, user.getStatus());
-            ps.setInt(7, user.getUserId());
-
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean updateStatus(int userId, String status) {
-        String sql = "UPDATE users SET status = ? WHERE user_id = ?";
-
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, status);
-            ps.setInt(2, userId);
-
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean existsByEmailExcludeId(String email, int userId) {
-        String sql = "SELECT 1 FROM users WHERE email = ? AND user_id != ?";
+    public User getUserByEmail(String email) {
+        String sql = "SELECT u.*, r.role_name FROM users u JOIN roles r ON u.role_id = r.role_id WHERE u.email = ?";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, email);
-            ps.setInt(2, userId);
             ResultSet rs = ps.executeQuery();
-            return rs.next();
+
+            if (rs.next()) {
+                return mapResultSetToUser(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public boolean updatePassword(int userId, String newPassword) {
+        String sql = "UPDATE users SET password = ? WHERE user_id = ?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newPassword);
+            ps.setInt(2, userId);
+
+            return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
