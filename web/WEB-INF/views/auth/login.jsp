@@ -47,7 +47,6 @@
         <p class="text-muted" style="font-size:.85rem;">Sign in to your account</p>
     </div>
 
-    <!-- Error / success messages -->
     <c:if test="${not empty errorMessage}">
         <div class="alert alert-danger py-2 d-flex align-items-center gap-2">
             <i class="bi bi-exclamation-circle"></i>

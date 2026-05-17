@@ -131,4 +131,28 @@ public class UserDAO {
             return false;
         }
     }
+
+    public User login(String username, String password) {
+        String sql = "SELECT u.*, r.role_name "
+                   + "FROM users u "
+                   + "JOIN roles r ON u.role_id = r.role_id "
+                   + "WHERE u.username = ? AND u.password = ? AND u.status = 'ACTIVE'";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToUser(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

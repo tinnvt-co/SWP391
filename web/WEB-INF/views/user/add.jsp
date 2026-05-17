@@ -27,21 +27,18 @@
 
             <div class="row g-3">
 
-                <!-- Full Name -->
                 <div class="col-12">
                     <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
                     <input type="text" name="fullName" class="form-control"
                            value="${param.fullName}" placeholder="Enter full name" required>
                 </div>
 
-                <!-- Username -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
                     <input type="text" name="username" class="form-control"
                            value="${param.username}" placeholder="Enter username" required>
                 </div>
 
-                <!-- Password -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
                     <div class="input-group">
@@ -54,21 +51,18 @@
                     </div>
                 </div>
 
-                <!-- Email -->
                 <div class="col-12">
                     <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
                     <input type="email" name="email" class="form-control"
                            value="${param.email}" placeholder="Enter email" required>
                 </div>
 
-                <!-- Phone -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Phone</label>
                     <input type="text" name="phone" class="form-control"
                            value="${param.phone}" placeholder="Enter phone number">
                 </div>
 
-                <!-- Role -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Role <span class="text-danger">*</span></label>
                     <select name="roleId" class="form-select" required>
@@ -82,14 +76,12 @@
                     </select>
                 </div>
 
-                <!-- Address -->
                 <div class="col-12">
                     <label class="form-label fw-semibold">Address</label>
                     <input type="text" name="address" class="form-control"
                            value="${param.address}" placeholder="Enter address">
                 </div>
 
-                <!-- Status -->
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Status</label>
                     <select name="status" class="form-select">
@@ -98,8 +90,7 @@
                     </select>
                 </div>
 
-            </div><!-- /.row -->
-
+            </div>
             <hr class="my-4">
 
             <div class="d-flex gap-2">

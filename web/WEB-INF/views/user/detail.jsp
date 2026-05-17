@@ -13,7 +13,6 @@
 </div>
 
 <div class="row g-3">
-    <!-- Avatar + basic info card -->
     <div class="col-lg-4">
         <div class="card border-0 shadow-sm text-center p-4">
             <div class="mx-auto mb-3 rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center fw-bold"
@@ -54,7 +53,6 @@
         </div>
     </div>
 
-    <!-- Detail fields card -->
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white fw-semibold border-0 pt-3">

@@ -6,16 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${not empty pageTitle ? pageTitle : 'Generator Management System'}</title>
-
-    <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
     <style>
         body { background-color: #f4f6f9; }
 
-        /* Sidebar */
         #sidebar {
             width: 250px;
             min-height: 100vh;
@@ -61,15 +56,12 @@
         }
         #sidebar .nav-link i { font-size: 1rem; width: 1.2rem; text-align: center; }
 
-        /* Main content */
         #main-content {
             margin-left: 250px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
-        /* Topbar */
         #topbar {
             background: #fff;
             border-bottom: 1px solid #e3e6ea;
@@ -81,7 +73,6 @@
             top: 0;
             z-index: 999;
         }
-
         .page-wrapper { padding: 1.5rem; flex: 1; }
     </style>
 </head>

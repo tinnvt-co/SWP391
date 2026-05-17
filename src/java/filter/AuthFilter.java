@@ -1,33 +1,37 @@
 package filter;
 
+import model.User;
 
-
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.Set;
-import org.apache.catalina.User;
-
-
 
 @WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
 public class AuthFilter implements Filter {
 
     private static final Set<String> PUBLIC_URLS = Set.of(
+            "/home",
             "/login",
-            "/forgot-password",
-            "/users"   // TODO: remove after login is implemented
+            "/forgot-password"
     );
 
- 
     private static final Set<String> PUBLIC_PREFIXES = Set.of(
             "/assets/"
     );
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res,
-                         FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
 
         HttpServletRequest  request  = (HttpServletRequest)  req;
         HttpServletResponse response = (HttpServletResponse) res;
@@ -36,17 +40,13 @@ public class AuthFilter implements Filter {
         String requestURI  = request.getRequestURI();
         String path        = requestURI.substring(contextPath.length());
 
-        // Allow public URLs and static assets
-        if (isPublic(path)) {
+        if (isPublicPath(path)) {
             chain.doFilter(request, response);
             return;
         }
 
-        // Check session
         HttpSession session   = request.getSession(false);
-        User        loginUser = (session != null)
-                ? (User) session.getAttribute("loginUser")
-                : null;
+        User        loginUser = (session != null) ? (User) session.getAttribute("loginUser") : null;
 
         if (loginUser == null) {
             response.sendRedirect(contextPath + "/login");
@@ -56,12 +56,18 @@ public class AuthFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    private boolean isPublic(String path) {
-        if (PUBLIC_URLS.contains(path)) return true;
+    private boolean isPublicPath(String path) {
+        if (PUBLIC_URLS.contains(path)) {
+            return true;
+        }
         for (String prefix : PUBLIC_PREFIXES) {
-            if (path.startsWith(prefix)) return true;
+            if (path.startsWith(prefix)) {
+                return true;
+            }
         }
         return false;
     }
-}
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {}
+}
