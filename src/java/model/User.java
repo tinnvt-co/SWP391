@@ -52,7 +52,6 @@ public class User {
     public void setUpdatedAt(LocalDateTime updatedAt)  { this.updatedAt = updatedAt; }
     public void setRoleName(String roleName)           { this.roleName  = roleName; }
 
-    // ── Role helpers ─────────────────────────────────────────────
     public boolean isAdmin()            { return roleId == 1; }
     public boolean isManager()          { return roleId == 2; }
     public boolean isWarehouseManager() { return roleId == 3; }

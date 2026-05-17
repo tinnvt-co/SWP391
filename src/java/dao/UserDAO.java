@@ -169,6 +169,63 @@ public class UserDAO {
         }
     }
 
+    public boolean updateUser(User user) {
+        String sql = "UPDATE users SET full_name = ?, email = ?, phone = ?, address = ?, role_id = ?, status = ? "
+                   + "WHERE user_id = ?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPhone());
+            ps.setString(4, user.getAddress());
+            ps.setInt(5, user.getRoleId());
+            ps.setString(6, user.getStatus());
+            ps.setInt(7, user.getUserId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateStatus(int userId, String newStatus) {
+        String sql = "UPDATE users SET status = ? WHERE user_id = ?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newStatus);
+            ps.setInt(2, userId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean existsByEmailExcludeId(String email, int excludeUserId) {
+        String sql = "SELECT 1 FROM users WHERE email = ? AND user_id != ?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setInt(2, excludeUserId);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public User login(String username, String password) {
         String sql = "SELECT u.*, r.role_name "
                    + "FROM users u "

@@ -53,14 +53,23 @@
 
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Role <span class="text-danger">*</span></label>
-                    <select name="roleId" class="form-select" required>
-                        <c:forEach var="r" items="${roles}">
-                            <option value="${r.roleId}"
-                                    <c:if test="${r.roleId eq user.roleId}">selected</c:if>>
-                                ${r.roleName}
-                            </option>
-                        </c:forEach>
-                    </select>
+                    <c:choose>
+                        <c:when test="${user.roleName eq 'ADMIN'}">
+                            <input type="text" class="form-control bg-light" value="${user.roleName}" disabled>
+                            <input type="hidden" name="roleId" value="${user.roleId}">
+                            <small class="text-muted"><i class="bi bi-lock-fill me-1"></i>Admin role cannot be changed.</small>
+                        </c:when>
+                        <c:otherwise>
+                            <select name="roleId" class="form-select" required>
+                                <c:forEach var="r" items="${roles}">
+                                    <option value="${r.roleId}"
+                                            <c:if test="${r.roleId eq user.roleId}">selected</c:if>>
+                                        ${r.roleName}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <div class="col-12">

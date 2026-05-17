@@ -4,10 +4,11 @@
     String cp  = request.getContextPath();
     String uri = request.getRequestURI();
 
-    boolean isAdmin            = loginUser != null && loginUser.isAdmin();
-    boolean isManager          = loginUser != null && loginUser.isManager();
-    boolean isWarehouseManager = loginUser != null && loginUser.isWarehouseManager();
-    boolean isStaff            = loginUser != null && loginUser.isStaff();
+    String roleName            = (loginUser != null && loginUser.getRoleName() != null) ? loginUser.getRoleName() : "";
+    boolean isAdmin            = "ADMIN".equals(roleName);
+    boolean isManager          = "MANAGER".equals(roleName);
+    boolean isWarehouseManager = "WAREHOUSE_MANAGER".equals(roleName);
+    boolean isStaff            = "STAFF".equals(roleName);
 %>
 <nav id="sidebar">
     <div class="sidebar-brand">
